@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>餐饮企业财税健康自测</title>
+<style>
+/*
+  配色方法论：黄金比 7:2.5:0.5
+  70% 基础色：暖米 #f0ede5 / 灰绿渐变底
+  25% 主题色：灰绿 #85a6a1 / 青绿 #458d8c
+  5%  强调色：深青 #1c595a / 灰紫 #877384
+  原则：降低饱和度，同色系深浅有致
+*/
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --c1:#1c595a;--c2:#458d8c;--c3:#85a6a1;--c4:#877384;--c5:#d7d8ae;
+  --bg:#f0ede5;--card:#fff;--border:#d8d4c8;--txt:#2a3836;--txt2:#6b7b78;
+  --danger:#9e3b2f;--warn:#a07030;--safe:#3a7a5c;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--txt);
+  min-height:100vh;min-height:100dvh;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+.page{max-width:500px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.V{display:none;flex-direction:column;flex:1}.V.on{display:flex}
+
+/* ==================== 开始页 ==================== */
+.v0{
+  /* 70%基础色：多层绿色渐变营造氛围深度 */
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(133,166,161,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(215,216,174,.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(69,141,140,.05) 0%, transparent 60%),
+    linear-gradient(175deg, #1c595a 0%, #24625f 25%, #2d6e68 50%, #3a7b72 75%, #2d6e68 100%);
+  padding:0 28px;justify-content:center;
+  position:relative;overflow:hidden;
+}
+
+.s-deco{
+  position:absolute;top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--c5) 0%,var(--c3) 50%,var(--c5) 100%);
+  opacity:.3;
+}
+
+.s-ey{
+  font-size:11px;letter-spacing:.15em;
+  color:var(--c5);font-weight:500;opacity:.5;
+  margin-bottom:24px;
+}
+
+.s-title{
+  font-family:Georgia,"Songti SC","SimSun","FangSong",serif;
+  font-size:38px;font-weight:700;
+  line-height:1.3;letter-spacing:.02em;
+  color:#fff;margin-bottom:16px;
+}
+
+.s-sub{
+  font-size:15px;line-height:1.8;
+  color:rgba(255,255,255,.5);margin-bottom:48px;
+}
+.s-sub em{font-style:normal;color:var(--c5);font-weight:600}
+
+/* 25%主题色：数据卡片用灰绿调 */
+.s-row{
+  display:flex;
+  border:1px solid rgba(133,166,161,.25);
+  border-radius:14px;overflow:hidden;
+  margin-bottom:36px;
+  background:rgba(133,166,161,.08);
+}
+.s-cell{flex:1;padding:20px 10px;text-align:center;border-right:1px solid rgba(133,166,161,.15)}
+.s-cell:last-child{border-right:none}
+.s-cell-v{font-size:26px;font-weight:800;color:#fff;line-height:1;margin-bottom:5px}
+.s-cell-v span{font-size:12px;font-weight:400;opacity:.5}
+.s-cell-l{font-size:11px;color:rgba(255,255,255,.35);font-weight:500}
+
+/* 5%强调色：按钮用暖米，画龙点睛 */
+.btn-go{
+  display:block;width:100%;padding:18px;
+  background:var(--c5);color:var(--c1);
+  border:none;border-radius:14px;
+  font-size:16px;font-weight:700;cursor:pointer;
+  letter-spacing:.04em;
+  transition:transform .15s;
+  box-shadow:0 4px 24px rgba(0,0,0,.12);
+}
+.btn-go:active{transform:scale(.98)}
+
+.s-note{margin-top:18px;text-align:center;font-size:11px;color:rgba(255,255,255,.18);line-height:1.7}
+
+/* ==================== 答题页 ==================== */
+.v1{
+  /* 70%基础色：暖米底+微绿渐变，不再是纯色平面 */
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(133,166,161,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 100%, rgba(215,216,174,.08) 0%, transparent 50%),
+    linear-gradient(180deg, #edeae2 0%, #f0ede5 40%, #f2efe7 100%);
+  padding:24px 20px;
+}
+
+.q-top{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.q-num{font-family:Georgia,"Songti SC",serif;font-size:34px;font-weight:700;color:var(--c1);line-height:1}
+.q-of{font-size:13px;color:var(--c3);font-weight:500}
+
+.q-pbar{height:3px;background:rgba(133,166,161,.2);border-radius:3px;overflow:hidden;margin-bottom:28px}
+.q-pfill{height:100%;background:linear-gradient(90deg,var(--c3),var(--c2));border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+.q-card{
+  background:#fff;border-radius:18px;
+  flex:1;display:flex;flex-direction:column;overflow-y:auto;
+  box-shadow:0 2px 20px rgba(28,89,90,.05);
+  border:1px solid var(--border);
+}
+
+.q-hd{padding:24px 24px 0}
+.q-tag{
+  display:inline-block;
+  font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:5px 12px;border-radius:4px;margin-bottom:16px;
+}
+.q-tag-h{background:#f8efee;color:var(--danger);border-left:3px solid var(--danger)}
+.q-tag-m{background:#f5f0e8;color:var(--warn);border-left:3px solid var(--warn)}
+.q-tag-l{background:#eef3f0;color:var(--safe);border-left:3px solid var(--safe)}
+
+.q-text{font-size:16px;line-height:1.85;color:#444;padding:0 24px;margin-bottom:24px}
+
+.q-opts{border-top:1px solid var(--border)}
+.q-opt{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 24px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.q-opt:last-child{border-bottom:none;border-radius:0 0 18px 18px}
+.q-opt:active{background:#f5f3ee}
+.q-opt.on{background:rgba(69,141,140,.06)}
+
+.q-dot{
+  width:18px;height:18px;border:2px solid #c5c0b5;border-radius:50%;
+  flex-shrink:0;margin-top:3px;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.q-opt.on .q-dot{border-color:var(--c2);background:var(--c2)}
+.q-opt.on .q-dot::after{content:'';width:6px;height:6px;background:#fff;border-radius:50%}
+.q-opt-t{font-size:15px;line-height:1.6;color:var(--txt2);transition:color .2s}
+.q-opt.on .q-opt-t{color:var(--txt);font-weight:500}
+
+.q-nav{display:flex;gap:10px;margin-top:20px}
+.btn-q{flex:1;padding:16px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:transform .15s}
+.btn-q:active{transform:scale(.98)}
+.btn-bk{background:rgba(133,166,161,.12);color:var(--c3)}
+.btn-fw{background:var(--c1);color:#fff;box-shadow:0 4px 16px rgba(28,89,90,.15)}
+.btn-fw:disabled{background:#c5c0b5;color:#a8a49a;cursor:not-allowed;box-shadow:none}
+.btn-fw:disabled:active{transform:none}
+
+/* ==================== 结果页 ==================== */
+.v2{
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(133,166,161,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 100%, rgba(215,216,174,.08) 0%, transparent 50%),
+    linear-gradient(180deg, #edeae2 0%, #f0ede5 40%, #f2efe7 100%);
+  padding:0 0 32px;
+}
+
+.r-hero{padding:44px 28px 36px;position:relative;overflow:hidden;color:#fff}
+.r-hero::before{content:'';position:absolute;inset:0;pointer-events:none}
+
+.r-h4{background:linear-gradient(160deg,#4a2020 0%,#6b3030 40%,#7d3838 100%)}
+.r-h4::before{background:radial-gradient(ellipse at 80% 30%,rgba(180,100,100,.08),transparent 60%)}
+.r-h3{background:linear-gradient(160deg,#3b3020 0%,#6b5530 40%,#7d6838 100%)}
+.r-h3::before{background:radial-gradient(ellipse at 30% 60%,rgba(180,160,80,.06),transparent 60%)}
+.r-h2{background:linear-gradient(160deg,#2a3b30 0%,#3d5a48 50%,#4a6b55 100%)}
+.r-h2::before{background:radial-gradient(ellipse at 50% 30%,rgba(133,166,161,.08),transparent 60%)}
+.r-h1{
+  background:
+    radial-gradient(ellipse at 20% 80%,rgba(133,166,161,.1),transparent 50%),
+    radial-gradient(ellipse at 80% 20%,rgba(215,216,174,.08),transparent 50%),
+    linear-gradient(160deg,#1c595a 0%,#24625f 40%,#2d6e68 100%);
+}
+
+.r-deco{height:3px;background:linear-gradient(90deg,rgba(215,216,174,.3),rgba(133,166,161,.3),rgba(215,216,174,.3));border:none;margin-bottom:20px}
+.r-ey{font-size:11px;letter-spacing:.1em;color:rgba(255,255,255,.35);font-weight:500;margin-bottom:16px}
+
+.r-sc-row{display:flex;align-items:baseline;gap:6px;margin-bottom:8px}
+.r-sc{font-family:Georgia,"Songti SC",serif;font-size:84px;font-weight:700;line-height:1;letter-spacing:-.04em}
+.r-sc-u{font-size:18px;font-weight:500;opacity:.3}
+
+.r-lv{font-size:20px;font-weight:700;color:var(--c5);letter-spacing:.06em;margin-bottom:4px}
+.r-lv-s{font-size:12px;color:rgba(255,255,255,.25);font-weight:500}
+
+.r-body{padding:20px 20px 0}
+
+/* KPI面板 */
+.r-kpis{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;background:#fff;margin-bottom:14px;
+  box-shadow:0 2px 12px rgba(28,89,90,.04);
+}
+.r-kpi{padding:18px 10px;text-align:center;border-right:1px solid var(--border)}
+.r-kpi:last-child{border-right:none}
+.r-kpi-l{font-size:11px;color:var(--c3);font-weight:600;margin-bottom:8px}
+.r-kpi-v{font-size:24px;font-weight:800;line-height:1;margin-bottom:4px}
+.r-kpi-s{font-size:11px;color:#bbb}
+
+/* 分数谱带 */
+.r-spec{
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:18px 16px;margin-bottom:14px;
+  box-shadow:0 2px 12px rgba(28,89,90,.04);
+}
+.r-spec-h{font-size:12px;font-weight:600;color:var(--c3);margin-bottom:12px}
+.r-bar-w{position:relative;margin-bottom:10px}
+.r-bar{height:10px;border-radius:10px;display:flex;overflow:hidden}
+.rs1{background:linear-gradient(90deg,#85a6a1,#6b9b90);flex:4}
+.rs2{background:linear-gradient(90deg,#d7d8ae,#c8c99a);flex:6}
+.rs3{background:linear-gradient(90deg,#c4a882,#b89870);flex:7}
+.rs4{background:linear-gradient(90deg,#c09090,#a87070);flex:24}
+.r-pin{
+  position:absolute;top:-3px;width:16px;height:16px;border-radius:50%;
+  background:var(--c1);border:2.5px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+  transform:translateX(-50%);transition:left 1.4s cubic-bezier(.34,1.56,.64,1);
+}
+.r-lbs{display:flex;justify-content:space-between;font-size:10px;color:#bbb}
+
+/* 诊断说明 */
+.r-msg{
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:22px 20px;margin-bottom:14px;
+  box-shadow:0 2px 12px rgba(28,89,90,.04);
+  font-size:15px;line-height:1.85;color:#555;
+  border-left:3px solid var(--c2);
+}
+
+/* 逐项明细 */
+.r-tbl{
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;margin-bottom:20px;
+  box-shadow:0 2px 12px rgba(28,89,90,.04);
+}
+.r-tbl-h{font-size:12px;font-weight:600;color:var(--c3);padding:14px 20px 12px;border-bottom:2px solid var(--c1)}
+
+.r-tr{display:flex;align-items:center;padding:0 20px;border-bottom:1px solid #ece8df;min-height:48px}
+.r-tr:last-child{border-bottom:none}
+.r-tr:nth-child(even){background:#fafaf7}
+.r-tr-n{flex:1;font-size:13px;color:var(--txt2);padding:10px 0}
+.r-tr-b{width:68px;margin-right:10px}
+.r-tr-bi{height:4px;border-radius:4px;background:rgba(133,166,161,.15);overflow:hidden}
+.r-tr-bf{height:100%;border-radius:4px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.r-tr-bf.bad{background:linear-gradient(90deg,#c09090,var(--danger))}
+.r-tr-bf.ok{background:var(--c3)}
+.r-tr-v{min-width:44px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.r-tr-v.bad{color:var(--danger)}.r-tr-v.ok{color:var(--safe)}
+
+.btn-redo{
+  display:block;width:calc(100% - 40px);margin:0 20px;padding:15px;
+  background:#fff;border:1px solid var(--border);
+  border-radius:14px;font-size:15px;font-weight:600;
+  color:var(--c3);cursor:pointer;transition:transform .15s;
+  box-shadow:0 2px 12px rgba(28,89,90,.04);
+}
+.btn-redo:active{transform:scale(.98)}
+.r-fine{margin-top:16px;text-align:center;font-size:11px;color:#c5c0b5;line-height:1.7;padding:0 20px}
+
+.an{animation:su .4s cubic-bezier(.4,0,.2,1) both}
+.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.16s}.d4{animation-delay:.22s}.d5{animation-delay:.28s}
+@keyframes su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:400px){.s-title{font-size:32px}.r-sc{font-size:68px}.r-hero{padding:36px 22px 28px}.r-tr-b{width:52px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="V v0 on" id="v0">
+    <div class="s-deco"></div>
+    <div class="s-ey">财税风险自测</div>
+    <h1 class="s-title">餐饮企业<br>财税健康自测</h1>
+    <p class="s-sub">10 分钟自查，看看您的利润<br>有多少在<em>&ldquo;裸奔&rdquo;</em></p>
+    <div class="s-row">
+      <div class="s-cell"><div class="s-cell-v">11</div><div class="s-cell-l">道风险题</div></div>
+      <div class="s-cell"><div class="s-cell-v">5<span>分钟</span></div><div class="s-cell-l">完成时间</div></div>
+      <div class="s-cell"><div class="s-cell-v">0</div><div class="s-cell-l">信息收集</div></div>
+    </div>
+    <button class="btn-go" id="btnGo">开始自测</button>
+    <p class="s-note">完全匿名 &middot; 数据仅在您的设备上运行</p>
+  </div>
+
+  <div class="V v1" id="v1">
+    <div class="q-top"><span class="q-num" id="qN"></span><span class="q-of" id="qO"></span></div>
+    <div class="q-pbar"><div class="q-pfill" id="qP"></div></div>
+    <div class="q-card" id="qC"></div>
+    <div class="q-nav">
+      <button class="btn-q btn-bk" id="bB">上一题</button>
+      <button class="btn-q btn-fw" id="bF">下一题</button>
+    </div>
+  </div>
+
+  <div class="V v2" id="v2"><div id="rC"></div></div>
+</div>
+
+<script>
+(function(){
+var Q=[
+[1,"多执照/多门店混同穿透",5,"名下有好几个个体户或公司，收入、采购、员工工资全搅在一起，这家收的钱拿去补那家的亏，会计随便分着报。自己觉得反正都是“自己的生意”——可一旦哪家被查，所有关联主体的账都会被打通看，一家出事全部牵连。这个穿透风险，您清楚吗？",
+["不清楚，我的几家店确实都混着管",1],["大概知道不对，但没办法分开",1],["每家都独立核算，互不穿帮 / 只有单店",0]],
+[2,"拆分收入套用小规模额度",5,"为了省税，开好几个执照，每个季度开票都卡在30万以内，或者月度10万以内，维持小规模纳税人。税务局现在是按实际控制人合并计算的，穿透后超了照样补税——这个判定方式，您了解过吗？",
+["没了解，觉得一直这样没事",1],["知道有规定，但还在这么做",1],["没有拆分，就一个执照合规纳税",0]],
+[3,"私卡收款",5,"生意忙，用个人微信、支付宝或家人的卡收营业款，确实方便。但现在银行会把大额私卡流水直接推给税务局——这个新规矩，您有没有留意过？",
+["知道，但还这么做",1],["没想过，一直这么做",1],["已经全部走对公账户了",0]],
+[4,"加盟费私收",5,"加盟商的钱不走对公账、不开发票，直接打到个人卡上。对方跟您好的时候没事，一旦闹翻去举报，您前几年的私账都会被翻出来查个遍——这个雷握在别人手里，您担心过吗？",
+["担心，但一直都是这么收的",1],["没想过加盟商还会举报",1],["全部走公账规范开票 / 无加盟业务",0]],
+[5,"未开票收入隐匿",5,"除了平台上必须开票的部分，剩下的散客、团餐款、宴席定金，不开票也不申报。税务局会拿您周围同行的平均数据和您比，长期偏低系统会自动报警——这个比对机制，您听说过吗？",
+["没听说，未开票的部分我确实没报",1],["听说过，但还是没报",1],["没报的也正常申报了",0]],
+[6,"采购无票",3,"图便宜采购食材不要票，大家都懂。可成本票缺口一大，要么硬抗多交税，要么用别的发票往里“凑”。您现在是哪种情况？",
+["缺口大，多交税又不甘心",1],["在用其他发票冲抵，先混过去",1],["基本都要票，缺口很小",0]],
+[7,"大额装修无票",3,"几十万甚至上百万的装修，包工头开不了票，您就用一纸协议或白条入账，慢慢摊销。一旦查账，没票的成本全部被找掉，让您补一大笔企业所得税——这个金额您大概算过会是多少吗？",
+["没算过，不知道会补多少",1],["知道风险大，但没办法解决",1],["大额支出都要到了合规发票 / 无此类支出",0]],
+[8,"公私不分：报销和借款",3,"自己的车、孩子的班、家里的开销往公司账上报，或者从公司账户直接打钱给个人用，账上长期挂着“老板借款”几十万上百万。被查到不仅要补企业所得税，还要追缴20%的分红个税——这个账，以前有人帮您算过吗？",
+["没算过，一直这么操作",1],["知道有点问题，但拖着没处理",1],["个人和公司账目分得很清，没有大额挂账",0]],
+[9,"工资分拆",3,"工资分两批发，公账发基本工资保个税最低档，剩下的用私卡或现金补。可一旦有员工闹翻了去举报，所有人的账都会翻一遍——这事您琢磨过吗？",
+["知道有隐患，但没找到好办法",1],["没想过，觉得内部人不会捕",1],["工资全额走公账并报税",0]],
+[10,"社保缴纳不合规",2,"员工社保这块，是不是有不少人没交、少交，或者统统按最低基数交？社保现在归税务管，数据一比对就穿帮，一旦被查，要补缴从入职起所有年份的社保外加滞纳金——您店里这个情况普遍吗？",
+["挚普遍的，不少人都没交或按最低交",1],["只有少数几个人没交或没交全",1],["全体员工都足额缴纳",0]],
+[11,"僵尸店不注销",2,"干不下去的门店关了就不管了，执照不注销、税务不申报。结果法人会被列入黑名单，连累正常经营的其他店，甚至影响贷款、出行、孩子上学——您有没有这样的“僵尸店”一直搋着？",
+["有，关了就没管过",1],["不确定现在状态算不算异常",1],["关一家清一家，都注销干净了",0]]
+];
+
+var c=0,a=[];for(var i=0;i<Q.length;i++)a.push(-1);
+var v0=document.getElementById("v0"),v1=document.getElementById("v1"),v2=document.getElementById("v2"),
+qN=document.getElementById("qN"),qO=document.getElementById("qO"),qP=document.getElementById("qP"),
+qC=document.getElementById("qC"),bB=document.getElementById("bB"),bF=document.getElementById("bF"),rC=document.getElementById("rC");
+
+document.getElementById("btnGo").addEventListener("click",function(){v0.classList.remove("on");v1.classList.add("on");draw()});
+bB.addEventListener("click",function(){if(c>0){c--;draw()}});
+bF.addEventListener("click",function(){if(a[c]<0)return;if(c<Q.length-1){c++;draw()}else res()});
+qC.addEventListener("click",function(e){var el=e.target;while(el&&el!==qC){if(el.getAttribute&&el.getAttribute("data-i")!==null){a[c]=parseInt(el.getAttribute("data-i"),10);draw();return}el=el.parentElement}});
+
+function draw(){
+  var q=Q[c],n=Q.length;
+  qN.textContent=String(q[0]).padStart(2,"0");
+  qO.textContent=" / "+n;
+  qP.style.width=((c+1)/n*100)+"%";
+  var tc=q[2]>=5?"q-tag-h":q[2]>=3?"q-tag-m":"q-tag-l";
+  var tl=q[2]>=5?"高风险项 \xb7 "+q[2]+"分":q[2]>=3?"中风险项 \xb7 "+q[2]+"分":"一般项 \xb7 "+q[2]+"分";
+  var h='<div class="q-hd"><div class="q-tag '+tc+'">'+tl+'</div></div><div class="q-text">'+q[3]+'</div><div class="q-opts">';
+  for(var j=0;j<3;j++){var s=a[c]===j?" on":"";h+='<div class="q-opt'+s+'" data-i="'+j+'"><div class="q-dot"></div><div class="q-opt-t">'+q[4+j][0]+'</div></div>'}
+  h+="</div>";qC.innerHTML=h;
+  bB.style.visibility=c===0?"hidden":"visible";
+  bF.textContent=c===n-1?"查看结果":"下一题";
+  bF.disabled=a[c]<0;
+}
+
+function res(){
+  var tot=0,hc=0,ri=0,si=0,rows=[];
+  for(var k=0;k<Q.length;k++){var q=Q[k],sc=q[4+a[k]][1]===1,p=sc?q[2]:0;tot+=p;if(q[2]>=5&&sc)hc++;if(sc)ri++;else si++;rows.push([q[1],p,q[2],sc])}
+  var lv,ln,hcls,msg;
+  if(tot>=18||hc>=2){lv=4;ln="需尽快处理";hcls="r-h4";msg="您的风险已经不是“多交税”的问题，而是可能牵连到个人和家庭。这类情况我们见过很多，最早的摸底梳理不收费，您先知道到底有多大坑，再决定怎么填。"}
+  else if(tot>=11){lv=3;ln="该重视了";hcls="r-h3";msg="几个问题一叠加，一旦被查或被举报，补税的钱可能会吃掉一到两年的辛苦利润。建议约一次私下聊聊，不给结论不推销，先帮您把真正的雷和擊边球分清楚。"}
+  else if(tot>=5){lv=2;ln="有些隐患";hcls="r-h2";msg="多数老实做生意的餐饮人都在这个区间，日子能过，但经不起查。建议您先对照清单把自己过一遍，哪里卡住了，找个懂的人问一嘴就行。"}
+  else{lv=1;ln="底子不错";hcls="r-h1";msg="恭喜您，您比90%的同行都清醒，接下来可以琢磨怎么在安全线内把多交的税“拿回来”。"}
+
+  var mk=Math.min(tot/41*100,100);
+  var dh="";
+  for(var m=0;m<rows.length;m++){var r=rows[m],bw=r[3]?(r[1]/5*100):0,cl=r[3]?"bad":"ok";
+  dh+='<div class="r-tr"><span class="r-tr-n">'+r[0]+'</span><div class="r-tr-b"><div class="r-tr-bi"><div class="r-tr-bf '+cl+'" style="width:0" data-w="'+bw+'"></div></div></div><span class="r-tr-v '+cl+'">'+(r[3]?"+"+r[1]:"0")+'</span></div>'}
+
+  rC.innerHTML=
+  '<div class="r-hero '+hcls+'"><div class="r-inner"><hr class="r-deco"><div class="r-ey">风险评估结果</div><div class="r-sc-row"><span class="r-sc" id="rN">0</span><span class="r-sc-u">/ 41</span></div><div class="r-lv">'+ln+'</div><div class="r-lv-s">风险等级 '+lv+' / 4</div></div></div>'+
+  '<div class="r-body">'+
+  '<div class="r-kpis an d1"><div class="r-kpi"><div class="r-kpi-l">风险占比</div><div class="r-kpi-v" style="color:var(--danger)" id="rPct">0%</div><div class="r-kpi-s">占满分比例</div></div><div class="r-kpi"><div class="r-kpi-l">风险项</div><div class="r-kpi-v" style="color:var(--danger)">'+ri+'</div><div class="r-kpi-s">共 11 项</div></div><div class="r-kpi"><div class="r-kpi-l">安全项</div><div class="r-kpi-v" style="color:var(--safe)">'+si+'</div><div class="r-kpi-s">共 11 项</div></div></div>'+
+  '<div class="r-spec an d2"><div class="r-spec-h">您的得分位置</div><div class="r-bar-w"><div class="r-bar"><div class="rs1"></div><div class="rs2"></div><div class="rs3"></div><div class="rs4"></div></div><div class="r-pin" id="rPn" style="left:0"></div></div><div class="r-lbs"><span>0</span><span>5</span><span>11</span><span>18</span><span>41</span></div></div>'+
+  '<div class="r-msg an d3">'+msg+'</div>'+
+  '<div class="r-tbl an d4"><div class="r-tbl-h">逐项得分明细</div>'+dh+'</div>'+
+  '<button class="btn-redo an d5" id="btnR">重新测试</button>'+
+  '<p class="r-fine">本测评仅供参考，不构成专业财税意见。关闭页面即消失。</p></div>';
+
+  v1.classList.remove("on");v2.classList.add("on");
+  document.getElementById("btnR").addEventListener("click",function(){for(var n=0;n<a.length;n++)a[n]=-1;c=0;v2.classList.remove("on");v0.classList.add("on")});
+  setTimeout(function(){
+    document.getElementById("rPn").style.left=mk+"%";
+    cup(document.getElementById("rN"),0,tot,1400);
+    cup2(document.getElementById("rPct"),0,Math.round(tot/41*100),1400,"%");
+    var bs=document.querySelectorAll(".r-tr-bf");for(var b=0;b<bs.length;b++)bs[b].style.width=bs[b].getAttribute("data-w")+"%";
+  },200);
+}
+
+function cup(el,f,t,d){var t0=performance.now();function tk(n){var p=Math.min((n-t0)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(f+(t-f)*e);if(p<1)requestAnimationFrame(tk)}requestAnimationFrame(tk)}
+function cup2(el,f,t,d,s){var t0=performance.now();function tk(n){var p=Math.min((n-t0)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(f+(t-f)*e)+s;if(p<1)requestAnimationFrame(tk)}requestAnimationFrame(tk)}
+})();
+</script>
+</body>
+</html>
